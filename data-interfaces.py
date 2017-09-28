@@ -32,4 +32,32 @@ def to_json(json_string):
     json_dict = json.loads(json_string)
     return json_dict
 
-# def http_get(url):
+def http_get(url):
+    https_response = HTTP_CLIENT.request('GET',url)
+    return response
+
+def http_post(url,body):
+    https_response = HTTP_CLIENT.request('POST',url)
+    return response
+
+def http_get_custom_headers(url,headers):
+    https_response = HTTP_CLIENT.request('GET',url)
+    return response
+
+def http_post_custom_headers(url,body,headers):
+    https_response = HTTP_CLIENT.request('POST',url)
+    return response
+
+def socket_tcp_raw_connect(host,port):
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
+    client.connect((HOST, PORT))
+    banner = client.recv(1024)
+    return client, banner
+
+def socket_tcp_raw_send_data(client,data):
+    client.send(data)
+    response = client.recv(1024)
+    return response
+
+def socket_tcp_raw_close_completely(client):
+    client.close()
