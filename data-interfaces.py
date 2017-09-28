@@ -48,11 +48,26 @@ def http_post_custom_headers(url,body,headers):
     https_response = HTTP_CLIENT.request('POST',url)
     return response
 
-def socket_tcp_raw_connect(host,port):
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
-    client.connect((HOST, PORT))
-    banner = client.recv(1024)
-    return client, banner
+def socket_create_connect(host,port,TRANSPORT,IP_VERSION):
+
+    if(IP_VERSION == 4 and TRANSPORT == "TCP"):
+        client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    elif(IP_VERSION == 4 and TRANSPORT == "UDP"):
+        client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+    elif(IP_VERSION == 6 and TRANSPORT == "TCP"):
+        client = socket.socket(socket.AF_INET6, socket.SOCK_STREAM,0,0)
+
+    elif(IP_VERSION == 6 and TRANSPORT == "UDP"):
+        client = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM,0,0)
+
+    else:
+        print("The Socket You asked for is not in the Right Format. Acceptable Options are: 4 and 6 for IP Version and TCP or UDP for Transport")
+
+        client.connect((HOST, PORT))
+        banner = client.recv(1024)
+        return client, banner
 
 def socket_tcp_raw_send_data(client,data):
     client.send(data)
