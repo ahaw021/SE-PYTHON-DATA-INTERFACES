@@ -48,7 +48,7 @@ def http_post_custom_headers(url,body,headers):
     https_response = HTTP_CLIENT.request('POST',url)
     return response
 
-def socket_create_connect(host,port,TRANSPORT,IP_VERSION):
+def socket_create_connect(HOST,PORT,TRANSPORT,IP_VERSION):
 
     if(IP_VERSION == 4 and TRANSPORT == "TCP"):
         client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -69,10 +69,14 @@ def socket_create_connect(host,port,TRANSPORT,IP_VERSION):
         banner = client.recv(1024)
         return client, banner
 
-def socket_tcp_raw_send_data(client,data):
+def socket_send_data(client,data):
     client.send(data)
     response = client.recv(1024)
     return response
 
-def socket_tcp_raw_close_completely(client):
+def socket_close_completely(client):
     client.close()
+
+def ssl_socket_create_connect(HOST,PORT,TRANSPORT,IP_VERSION,TLSSTRENGTH,CIPHERMASK):
+    client,banner = socket_create_connect(host,port,TRANSPORT,IP_VERSION)
+    
